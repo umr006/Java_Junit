@@ -18,4 +18,11 @@ public class NumberWorkerTest {
         assertTrue(numberWorker.isPrime(numb));
     }
 
+
+    @ParameterizedTest
+    @ValueSource(ints = {4, 8, 10, 104, 822})
+    void isPrimeForNotPrimes(int numb) {
+        assertFalse(numberWorker.isPrime(numb));
+    }
+
 }
