@@ -3,7 +3,11 @@ package edu.school21.numbers;
 import static java.lang.Math.sqrt;
 
 public class NumberWorker {
-    public boolean isPrime(int number) {
+    public boolean isPrime(int number) throws IllegalNumberException {
+        if (number == 0 || number == 1 || number < 0) {
+            throw new IllegalNumberException("Illegal Argument");
+        }
+
         boolean res = true;
         for (int i = 2, cnt = 0; i <= sqrt(number); i++, cnt++) {
             if (number % i == 0) {

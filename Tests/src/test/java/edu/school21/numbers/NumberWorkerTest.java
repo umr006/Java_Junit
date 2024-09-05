@@ -14,15 +14,28 @@ public class NumberWorkerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {3, 7, 101, 103, 821})
-    void isPrimeForPrimes(int numb) {
+    void isPrimeForPrimes(int numb) throws IllegalNumberException {
         assertTrue(numberWorker.isPrime(numb));
     }
 
 
     @ParameterizedTest
     @ValueSource(ints = {4, 8, 10, 104, 822})
-    void isPrimeForNotPrimes(int numb) {
+    void isPrimeForNotPrimes(int numb) throws IllegalNumberException {
         assertFalse(numberWorker.isPrime(numb));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, -10, -104, -822})
+    void isPrimeForIncorrectNumbers(int numb) {
+        IllegalNumberException ex = assertThrows(IllegalNumberException.class, () -> numberWorker.isPrime(numb));
+        assertEquals("Illegal Argument", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/data.csv")
+    void digitSum(int numb, int sum) {
+        assertEquals(numberWorker.digitsSum(numb), sum);
     }
 
 }
