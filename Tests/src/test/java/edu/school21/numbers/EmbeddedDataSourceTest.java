@@ -12,11 +12,10 @@ import javax.sql.DataSource;
 
 public class EmbeddedDataSourceTest {
 
-    private EmbeddedDatabase db = null;
-
+    private DataSource ds;
     @BeforeEach
     public void init() {
-        db = new EmbeddedDatabaseBuilder()
+        ds = new EmbeddedDatabaseBuilder()
                 .generateUniqueName(true)
                 .setType(HSQL)
                 .setScriptEncoding("UTF-8")
@@ -25,15 +24,11 @@ public class EmbeddedDataSourceTest {
                 .addScripts("data.sql")
                 .build();
     }
+    //DataSource
 
     @Test
     public void initTest() throws SQLException {
-        assertNotNull(db.getConnection());
-    }
-
-    @AfterEach
-    public void conDown () {
-        db.shutdown();
+        assertNotNull(ds.getConnection());
     }
 
 }
