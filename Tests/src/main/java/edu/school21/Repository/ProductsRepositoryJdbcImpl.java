@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductsRepositoryJdbcImplTest implements ProductsRepository {
+public class ProductsRepositoryJdbcImpl implements ProductsRepository {
     private final String FIND_ALL_SQL = "select * from products";
     private final String FIND_BY_ID_SQL = "select * from products where id = ?";
     private final String UPDATE_PRODUCT_SQL = "UPDATE products set name = ?, price = ? where id = ?";
@@ -19,7 +19,7 @@ public class ProductsRepositoryJdbcImplTest implements ProductsRepository {
     private final String DELETE_PRODUCT_SQL = "DELETE FROM products WHERE id = ?";
 
     private Connection connection;
-    public ProductsRepositoryJdbcImplTest(DataSource dataSource) throws SQLException {
+    public ProductsRepositoryJdbcImpl(DataSource dataSource) throws SQLException {
         connection = dataSource.getConnection();
     }
 
