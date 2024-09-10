@@ -29,16 +29,17 @@ public class ProductsRepositoryJdbcImplTest {
 
 
     final List<Product> EXPECTED_FIND_ALL_PRODUCTS = Arrays.asList(
-            new Product(1, "Product 1", BigDecimal.valueOf(10)),
-            new Product(2, "Product 2", BigDecimal.valueOf(20)),
-            new Product(3, "Product 3", BigDecimal.valueOf(30)),
-            new Product(4, "Product 4", BigDecimal.valueOf(40)),
-            new Product(5, "Product 5", BigDecimal.valueOf(50)),
-            new Product(6, "Product 6", BigDecimal.valueOf(60))
+            new Product(1, "Product 1", BigDecimal.valueOf(10).setScale(2)),
+            new Product(2, "Product 2", BigDecimal.valueOf(20).setScale(2)),
+            new Product(3, "Product 3", BigDecimal.valueOf(30).setScale(2)),
+            new Product(4, "Product 4", BigDecimal.valueOf(40).setScale(2)),
+            new Product(5, "Product 5", BigDecimal.valueOf(50).setScale(2)),
+            new Product(6, "Product 6", BigDecimal.valueOf(60).setScale(2))
     );
-    final Product EXPECTED_FIND_FIND_ID = new Product(2, "Product 2", BigDecimal.valueOf(20));
-    final Product EXPECTED_UPDATE_PRODUCT = new Product(3, "Product 12", BigDecimal.valueOf(120));
-    final Product EXPECTED_SAVE_PRODUCT = new Product(7, "Product 7", BigDecimal.valueOf(70));
+    final Product EXPECTED_FIND_FIND_ID = new Product(2, "Product 2", BigDecimal.valueOf(20).setScale(2));
+    final Product EXPECTED_UPDATE_PRODUCT = new Product(3, "Product 12", BigDecimal.valueOf(120).setScale(2));
+    final Product EXPECTED_SAVE_PRODUCT = new Product(7, "Product 7", BigDecimal.valueOf(70).setScale(2));
+    final Product EXPECTED_DELETE_PRODUCT = new Product(3L, "Delete", BigDecimal.valueOf(70).setScale(2));
 
     @BeforeEach
     public void init() throws SQLException {
@@ -62,5 +63,23 @@ public class ProductsRepositoryJdbcImplTest {
     @Test
     public void testFindById() {
         assertEquals(EXPECTED_FIND_FIND_ID, productsRepositoryJdbc.findById(2L).get());
+    }
+
+    @Test
+    public void testUpdate() {
+        productsRepositoryJdbc.update(EXPECTED_UPDATE_PRODUCT);
+        assertEquals(EXPECTED_UPDATE_PRODUCT, productsRepositoryJdbc.findById(3L).get());
+    }
+
+    @Test
+    public void testSave() {
+        productsRepositoryJdbc.save(EXPECTED_SAVE_PRODUCT);
+        assertEquals(EXPECTED_SAVE_PRODUCT, productsRepositoryJdbc.findById(7L).get());
+    }
+
+    @Test
+    public void deleteTest() {
+        productsRepositoryJdbc.delete(3L);
+        assertFalse(productsRepositoryJdbc.findById(3L).isPresent());
     }
 }

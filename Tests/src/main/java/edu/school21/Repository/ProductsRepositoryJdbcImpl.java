@@ -60,7 +60,7 @@ public class ProductsRepositoryJdbcImpl implements ProductsRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return Optional.of(product);
+        return Optional.ofNullable(product);
     }
 
     @Override
@@ -87,9 +87,9 @@ public class ProductsRepositoryJdbcImpl implements ProductsRepository {
     }
 
     @Override
-    public void delete(Product product) {
+    public void delete(Long id) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT_SQL)) {
-            preparedStatement.setLong(1, product.getId());
+            preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
