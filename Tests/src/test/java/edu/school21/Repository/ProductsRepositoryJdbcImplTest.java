@@ -80,6 +80,6 @@ public class ProductsRepositoryJdbcImplTest {
     @Test
     public void deleteTest() {
         productsRepositoryJdbc.delete(3L);
-        assertFalse(productsRepositoryJdbc.findById(3L).isPresent());
+        assertTrue(productsRepositoryJdbc.findById(3L).isEmpty());
     }
 }
